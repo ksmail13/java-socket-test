@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Test</title>
+</head>
+<body>
+
+<div id="log" style="border: 1px solid #000; padding: 10px;"></div>
+
+<script src="/js/sockjs.js" />
+<script>
+/*<![CDATA[*/
+    window.onload = function() {
+
+        for (var i = 0; i < 1; i++) {
+
+        setTimeout(function () {
+                var sock = new SockJS("http://localhost:8000/ws/rand");
+                sock.onmessage = function (e) {
+                    sock.close();
+                };
+            }, 100);
+        }
+    }
+/*]]>*/
+</script>
+</body>
+</html>
