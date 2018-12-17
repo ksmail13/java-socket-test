@@ -1,28 +1,33 @@
 package test.micky.websocket;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.concurrent.Callable;
 
 @Controller
 public class TestController {
 
     @RequestMapping("/")
-    public ModelAndView index() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("index");
-
-        return mav;
+    public Callable<ModelAndView> index() {
+        return getModelAndViewCallable("index");
     }
 
-    @RequestMapping("/{path}")
-    public ModelAndView path(@PathVariable String path) {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName(path);
+    @RequestMapping("/echo")
+    public Callable<ModelAndView> echoTestPage() {
+        return getModelAndViewCallable("echo");
+    }
 
-        return mav;
+    @RequestMapping("/rand")
+    public Callable<ModelAndView> randTestPage() {
+        return getModelAndViewCallable("rand");
+    }
+
+    private Callable<ModelAndView> getModelAndViewCallable(String rand) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName(rand);
+
+        return () -> mav;
     }
 }
