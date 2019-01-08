@@ -19,26 +19,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Config implements WebFluxConfigurer {
 
-	@Autowired
-	private ThymeleafReactiveViewResolver viewResolver;
+    @Autowired
+    private ThymeleafReactiveViewResolver viewResolver;
 
-	@Bean
-	public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
-		return new Jackson2ObjectMapperBuilder().failOnUnknownProperties(false)
-				.serializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+    @Bean
+    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
+        return new Jackson2ObjectMapperBuilder().failOnUnknownProperties(false)
+            .serializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 
-	@Override
-	public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
-		configurer.defaultCodecs().enableLoggingRequestDetails(log.isDebugEnabled());
-	}
+    @Override
+    public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
+        configurer.defaultCodecs().enableLoggingRequestDetails(log.isDebugEnabled());
+    }
 
-	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		if (viewResolver != null) {
-			log.error("viewResolver is emtpy");
-		}
-		registry.viewResolver(viewResolver);
-	}
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        if (viewResolver != null) {
+            log.error("viewResolver is emtpy");
+        }
+        registry.viewResolver(viewResolver);
+    }
 
 }

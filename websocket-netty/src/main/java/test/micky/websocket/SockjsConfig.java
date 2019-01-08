@@ -16,18 +16,18 @@ import test.micky.websocket.socket.SockjsOption;
 @Configuration
 public class SockjsConfig {
 
-	@Bean
-	public WebSocketHandler echoSocketHandler() {
-		return new EchoWebSocketHandler();
-	}
+    @Bean
+    public WebSocketHandler echoSocketHandler() {
+        return new EchoWebSocketHandler();
+    }
 
-	@Bean
-	public RouterFunction<?> sockjsInfo(Optional<SockjsOption> option) {
-		SockjsOption o = option.orElse(SockjsOption.builder().build());
-		return RouterFunctions.route().path(o.getPrefix(),
-				b -> b.GET("/info", req -> ServerResponse.ok().body(BodyInserters.fromObject(o))).GET("",
-						req -> ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).syncBody("Welcome to SockJs!\n")))
-				.build();
-	}
+    @Bean
+    public RouterFunction<?> sockjsInfo(Optional<SockjsOption> option) {
+        SockjsOption o = option.orElse(SockjsOption.builder().build());
+        return RouterFunctions.route().path(o.getPrefix(),
+            b -> b.GET("/info", req -> ServerResponse.ok().body(BodyInserters.fromObject(o)))
+                .GET("", req -> ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).syncBody("Welcome to SockJs!\n")))
+            .build();
+    }
 
 }
