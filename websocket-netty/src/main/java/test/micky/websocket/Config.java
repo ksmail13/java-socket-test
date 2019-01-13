@@ -15,12 +15,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@EnableWebFlux
 @Slf4j
 public class Config implements WebFluxConfigurer {
 
-    @Autowired
-    private ThymeleafReactiveViewResolver viewResolver;
 
     @Bean
     public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
@@ -33,12 +30,5 @@ public class Config implements WebFluxConfigurer {
         configurer.defaultCodecs().enableLoggingRequestDetails(log.isDebugEnabled());
     }
 
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        if (viewResolver != null) {
-            log.error("viewResolver is emtpy");
-        }
-        registry.viewResolver(viewResolver);
-    }
 
 }
