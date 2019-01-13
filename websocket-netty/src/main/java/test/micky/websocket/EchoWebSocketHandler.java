@@ -7,7 +7,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.reactive.socket.WebSocketHandler;
-import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 
@@ -20,7 +19,7 @@ public class EchoWebSocketHandler implements WebSocketHandler {
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         log.info("socket connected {}({})", session.getId(), session.getAttributes());
-        return session.send(session.receive().map(WebSocketMessage::getPayloadAsText)
+        return session.send(session.receive().map(msg -> String.format("%s / %s", session.getId(), msg.getPayloadAsText()))
                 .doOnNext(msg -> log.debug("recv msg {}", msg))
                 .map(session::textMessage))
                 .doOnError(t -> log.error("error by {}", t))
